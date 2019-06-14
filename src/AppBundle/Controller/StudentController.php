@@ -118,12 +118,16 @@ class StudentController extends Controller
 
     /**
      * Show all student
-     *
+     * @param Request $request
+     * @return mixed
      * @Route("/student", name="fe_student_show_all", methods={"GET"})
      */
-    public function getAllSAction()
+    public function getAllSAction(Request $request)
     {
-        $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
+        $limit  = $request->query->getInt('limit');
+        $offset = $request->query->getInt('offset');
+
+        $students = $this->getDoctrine()->getRepository(Student::class)->getPaginate($limit, $offset);
 
         return $this->get('api.entity_manager')->serializeToResponse($students, ['student']);
     }
