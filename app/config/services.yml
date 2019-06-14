@@ -1,0 +1,21 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+  # API services
+  api.entity_manager:
+    class: AppBundle\Service\ApiEntitySerializer
+    arguments:
+      - "@jms_serializer"
+      - "@request_stack"
+
+  cache.in_file:
+      class: AppBundle\Service\CacheService
+      arguments:
+        - "%kernel.environment%"
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
